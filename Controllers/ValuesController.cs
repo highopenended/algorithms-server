@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace server.Controllers
 {
@@ -10,37 +11,65 @@ namespace server.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
+        private readonly ILogger<ValuesController> _logger;
+
+        public ValuesController(ILogger<ValuesController> logger)
+        {
+            _logger = logger;
+        }
+
+        /// <summary>
+        /// Gets all values
+        /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "Value from server #1", "Value from server #2" };
+            return Ok(new[] { "Retrieved Value From Server: 1", "Retrieved Value From Server: 2" });
         }
 
-        // GET api/values/5
+        /// <summary>
+        /// Gets a specific value by id
+        /// </summary>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            return Ok("value");
         }
 
-        // POST api/values
+        /// <summary>
+        /// Creates a new value
+        /// </summary>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public IActionResult Post([FromBody] string value)
         {
-            Console.WriteLine("Hello World");
+            _logger.LogInformation("Received value: {Value}", value);
+            return CreatedAtAction(nameof(Get), new { id = 1 }, value);
         }
 
-        // PUT api/values/5
+        /// <summary>
+        /// Updates an existing value
+        /// </summary>
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Put(int id, [FromBody] string value)
         {
+            return NoContent();
         }
 
-        // DELETE api/values/5
+        /// <summary>
+        /// Deletes a value
+        /// </summary>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Delete(int id)
         {
+            return NoContent();
         }
     }
 }

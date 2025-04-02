@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "+kZhMM1TeXtTJDpBBZ74cWN5dkFLNyT9ReeV4ubHXvs=",
+  "Source": "algo-app-backend",
+  "BasePath": "_content/algo-app-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "algo-app-backend\\wwwroot",
+      "Source": "algo-app-backend",
+      "ContentRoot": "C:\\Users\\Matthew\\Documents\\_Coding\\Projects\\algorithm-app\\server\\wwwroot\\",
+      "BasePath": "_content/algo-app-backend",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
