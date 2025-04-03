@@ -36,7 +36,14 @@ namespace server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> Get(int id)
         {
-            return Ok("value");
+            if (int.TryParse(id.ToString(), out int n))
+            {
+                return Ok("Value for id: " + n);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         /// <summary>
