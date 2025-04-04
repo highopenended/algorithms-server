@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using server.Models;
+
 
 namespace server.Controllers
 {
@@ -28,6 +30,7 @@ namespace server.Controllers
             return Ok(new[] { "Retrieved Value From Server: 1", "Retrieved Value From Server: 2" });
         }
 
+
         /// <summary>
         /// Gets a specific value by id
         /// </summary>
@@ -46,16 +49,18 @@ namespace server.Controllers
             }
         }
 
+
         /// <summary>
         /// Creates a new value
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Post([FromBody] string value)
-        {
-            _logger.LogInformation("Received value: {Value}", value);
-            return CreatedAtAction(nameof(Get), new { id = 1 }, value);
+        public IActionResult Post([FromBody] ValuesDto dto)
+        {       
+            _logger.LogInformation("------ Received value: {Value}", dto.Value);
+            return CreatedAtAction(nameof(Get), new { id = 1 }, dto.Value);
         }
+
 
         /// <summary>
         /// Updates an existing value
@@ -67,6 +72,7 @@ namespace server.Controllers
         {
             return NoContent();
         }
+
 
         /// <summary>
         /// Deletes a value
